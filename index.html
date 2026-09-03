@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transformação do Instituto Levvo em ICT — Visão Geral do Projeto</title>
+<title>Kickoff — Consultoria de Transição para ICT · Instituto Levvo</title>
 <style>
 :root{--brand:#0e7490;--brand-dk:#0c4a6e;--ink:#1f2937;--muted:#64748b;--line:#e2e8f0;--panel:#f2f6f9;--accent:#c2410c;--bg:#f8fafc;}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -25,173 +25,97 @@ th{background:var(--brand);color:#fff;text-align:left;padding:11px 12px;font-siz
 td{border:1px solid #dbe2ea;padding:10px 12px;vertical-align:top;}
 td:first-child{font-weight:600;color:var(--brand-dk);}
 tr:nth-child(even) td{background:#f8fafc;}
-.checklist{background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-top:8px;}
-.checklist ul{list-style:none;margin:12px 0 16px;padding:0;columns:2;column-gap:36px;}
-@media(max-width:640px){.checklist ul{columns:1}}
-.checklist li{break-inside:avoid;margin:6px 0;padding-left:26px;position:relative;}
-.checklist li .box{position:absolute;left:0;top:2px;width:17px;height:17px;border:2px solid var(--brand);border-radius:4px;background:#fff;display:inline-block;}
+.checklist{background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-top:8px;display:grid;grid-template-columns:1fr 1fr;column-gap:36px;row-gap:8px;}
+@media(max-width:640px){.checklist{grid-template-columns:1fr}}
+.checklist .item{display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin:4px 0;padding:8px 10px;border-radius:8px;transition:background .15s;}
+.checklist .item:hover{background:#eef4f7;}
+.checklist .item input{width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:var(--brand);cursor:pointer;}
+.checklist .item span{color:#334155;font-size:14.5px;line-height:1.35;}
+.checklist .item input:checked + span{text-decoration:line-through;color:var(--muted);}
+.cta{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-top:12px;text-align:center;}
+.cta p{font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+.cta a.btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;font-size:15px;}
+.cta a.btn:hover{background:var(--brand-dk);}
+.cta .url{display:block;margin-top:12px;font-size:12.5px;color:var(--muted);word-break:break-all;}
 hr{border:none;border-top:1px solid var(--line);margin:30px 0;}
 .footer{max-width:900px;margin:-34px auto 50px;text-align:center;font-size:13px;color:var(--muted);padding:0 24px;}
 </style></head><body>
 <header class="top">
   <div class="inner">
-    <div class="kicker">Instituto Levvo · Projeto de Transformação</div>
-    <h1>Transformação do Instituto Levvo em ICT — Visão Geral do Projeto</h1>
-    <div class="sub">Documento preparado para o time do Instituto Levvo</div>
+    <div class="kicker">Instituto Levvo · Consultoria de Transformação</div>
+    <h1>Kickoff — Consultoria de Transição para Instituição Científica, Tecnológica e de Inovação (ICT)</h1>
+    <div class="sub">Resumo da primeira reunião de alinhamento da consultoria com o time do Instituto Levvo</div>
     <div class="meta">
-      <span>Data de geração: 26/08/2026</span>
+      <span>Data de geração: 02/09/2026</span>
+      <span>Reunião: 02/09/2026</span>
       <span class="tag">Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
     </div>
   </div>
 </header>
 <div class="doc">
-<h1>Transformação do Instituto Levvo em ICT — Visão Geral do Projeto</h1>
+<h1>Kickoff — Consultoria de Transição para ICT</h1>
 <p><strong>Para o time do Instituto Levvo</strong></p>
 <hr />
-<p><strong>Por que estamos fazendo isso (e por que você faz parte)</strong></p>
-<p>O Instituto Levvo nasceu de uma convicção simples: transformar a vida de mulheres em vulnerabilidade pela capacitação e pela costura — e mostrar que o que é feito com resíduo vira oportunidade. Hoje, o Jeans do Bem e a Oficina de Costura Mais Renda já provam isso todos os dias. O que estamos construindo agora é o próximo passo dessa mesma história: dar ao Instituto uma base que o torne mais forte, mais autônomo e mais reconhecido.</p>
-<p>A transformação em <strong>Instituição Científica, Tecnológica e de Inovação (ICT)</strong> é, na prática, uma forma de o Levvo ser tratado como o que ele é: uma organização que <strong>produz conhecimento e impacta vidas de forma mensurável</strong> — e não apenas uma ONG que depende de doações.</p>
-<p><strong>Não estamos sozinhos. Outras organizações sem fins lucrativos já fizeram essa travessia — e prosperaram.</strong></p>
-<ul>
-<li>O <strong>Instituto Capim Santo</strong> começou como uma organização de formação profissional e, ao estruturar metodologias replicáveis e parcerias corporativas, viu seu orçamento saltar de <strong>R$ 100 mil para R$ 15 milhões em cinco anos</strong>.</li>
-<li>A <strong>SoulCode Academy</strong> mostra o poder do modelo B2B: a unidade de consultoria responde por cerca de <strong>30% da receita</strong> de uma operação que movimenta mais de <strong>R$ 800 milhões</strong>.</li>
-<li>A <strong>FITec</strong> e a <strong>IBEDIS</strong> são ICTs privadas sem fins lucrativos que executam <strong>projetos de PD&amp;I financiados por empresas via Lei do Bem</strong> — exatamente o modelo que estamos construindo aqui.</li>
-<li>No nosso próprio setor, o <strong>SustexModa</strong>, o <strong>Instituto Alce</strong> e o <strong>Instituto Focus Têxtil</strong> transformam resíduo em capacitação e renda, mostrando que a base que já temos é real e valorizada.</li>
-<li>E o caso da <strong>ICT Sustentável Global</strong> prova que uma instituição pode <strong>nascer pronta</strong> para operar como ICT de sustentabilidade.</li>
-</ul>
-<p>Essas histórias trazem um ponto importante: <strong>a transformação é possível — e o caminho já foi percorrido por outros.</strong> O que fazemos todos os dias (resíduo + formação de mulheres + renda) é a matéria-prima dessa mudança. Resta organizar, registrar e mostrar.</p>
-<p><strong>O que precisamos construir juntos</strong></p>
-<p>O caminho até a ICT envolve frentes de trabalho que dependem do conhecimento de quem está no dia a dia do Instituto:</p>
-<ul>
-<li><strong>Separar o que é atividade rotineira do que é pesquisa e inovação.</strong> O trabalho da oficina é o coração do Instituto; é preciso identificar o que há de método novo e de resultado mensurável nele.</li>
-<li><strong>Ajustar a estrutura jurídico-contábil.</strong> Para acessar recursos de incentivo à inovação, é necessário estatuto que preveja pesquisa e contabilidade organizada em centros de custo.</li>
-<li><strong>Criar evidências e indicadores.</strong> Coletar dados, registrar horas de trabalho dedicadas à pesquisa e guardar comprovações — o que garante que o esforço seja reconhecido.</li>
-<li><strong>Preparar a infraestrutura.</strong> A sede em Samambaia tem potencial para ser um <strong>laboratório vivo</strong>, um espaço real de pesquisa e inovação.</li>
-<li><strong>Adaptar a identidade institucional.</strong> Deixar de ser vista apenas como organização assistencial e passar a ser reconhecida como parceira de pesquisa e inovação.</li>
-</ul>
-<p><strong>O que muda com isso</strong></p>
-<ul>
-<li><strong>Mais autonomia</strong>: acesso a incentivos à inovação (Lei do Bem) e a parcerias com empresas que investem em impacto e sustentabilidade, em vez de depender só de doações.</li>
-<li><strong>Mais valor ao que fazemos</strong>: um "curso" ou uma "oficina" passa a ser visto como <strong>pesquisa e inovação</strong>, algo que empresas e investidores entendem e valorizam.</li>
-<li><strong>Mais credibilidade</strong>: governança e indicadores organizados dão força ao Instituto frente a empresas, conselhos e políticas públicas.</li>
-</ul>
-<p><strong>Como o projeto se organiza</strong></p>
-<p>O trabalho é conduzido em duas fases sucessivas, no prazo total de aproximadamente um ano, com apoio estratégico, jurídico e de gestão.</p>
-<p><strong>Fase 01 — Transição para ICT (45 dias)</strong></p>
-<p>Estruturada em 3 entregáveis:</p>
+<p>Esta foi a <strong>primeira reunião de alinhamento</strong> da consultoria de transformação em Instituição Científica, Tecnológica e de Inovação (ICT). O encontro deu início oficial ao trabalho e teve como objetivo conhecer de perto a estrutura do Instituto — operacional, jurídica, financeira e metodológica — para preparar o diagnóstico do que já existe hoje.</p>
+<p><strong>O que foi conversado</strong></p>
+<p>O time do Instituto compartilhou os principais elementos da sua operação, e juntos começamos a organizar o que vai sustentar a transformação.</p>
 <table>
 <thead>
 <tr>
-<th>Entregável</th>
-<th>Período</th>
-<th>Resultado</th>
-<th>Objetivo</th>
+<th>Tema</th>
+<th>O que o Instituto compartilhou</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>1 — Diagnóstico</strong></td>
-<td>Dias 1–15</td>
-<td>Relatório de diagnóstico de admissibilidade de PD&amp;I</td>
-<td>Avaliar o que já existe (programas, equipe, infraestrutura) para virar ICT e separar o que é atividade rotineira do que é inovação — identificando as barreiras técnicas e incertezas que fundamentam os futuros projetos de pesquisa.</td>
+<td>Jeans do Bem</td>
+<td>O projeto nasceu no Instituto e hoje opera como empresa parceira, com uma relação formal: parte do resultado é revertida ao Instituto e há prioridade para as egressas dos cursos.</td>
 </tr>
 <tr>
-<td><strong>2 — Estruturação</strong></td>
-<td>Dias 16–30</td>
-<td>Desenho do plano de custos contábeis segregados</td>
-<td>Organizar a "casa" institucional: ajustar o estatuto para incluir pesquisa, criar centros de custo separados (mitigando riscos em auditorias) e estruturar o portfólio de projetos em linhas de pesquisa aplicada.</td>
+<td>Arrecadação e upcycling</td>
+<td>Coleta mensal de jeans (com parcerias como shopping e redes parceiras), além de lonas de outdoors e uniformes descartados — que viram produtos doados a instituições e à comunidade.</td>
 </tr>
 <tr>
-<td><strong>3 — Preparação para Mercado</strong></td>
-<td>Dias 31–45</td>
-<td>Mapa de empresas do setor têxtil investidoras em inovação (Lei do Bem)</td>
-<td>Levar o Instituto ao mercado: preparar os materiais comerciais (ESG/Lei do Bem), mapear os canais de incentivo e identificar as empresas têxteis que investem em inovação.</td>
+<td>Formação</td>
+<td>Curso de costura com metodologia SENAI, capacitações próprias e treinamento de reciclagem para selecionar candidatas aptas a trabalhar no Jeans do Bem.</td>
+</tr>
+<tr>
+<td>Instalações</td>
+<td>Sede em imóvel concedido pelo Governo do Distrito Federal (termo renovável de 30 anos), com situação regularizada.</td>
+</tr>
+<tr>
+<td>Equipe e governança</td>
+<td>Estrutura com diretoria e conselho, profissionais prestadores de serviço e documentação em consolidação (a caminho de certificações como o Selo Social).</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Objetivos por etapa (para facilitar):</strong><br />
-- <strong>Entregável 1</strong> — entender o que existe hoje e separar rotina × inovação (base para os projetos de PD&amp;I).<br />
-- <strong>Entregável 2</strong> — adequar estatuto e finanças (centros de custo) e desenhar o portfólio de pesquisa aplicada.<br />
-- <strong>Entregável 3</strong> — montar a oferta comercial, diversificar fontes de captação e mapear empresas do setor têxtil (Lei do Bem).</p>
-<p>Ao final da Fase 01, o Instituto estará formalmente organizado para operar como ICT.</p>
-<p><strong>Fase 02 — Acompanhamento e Captação (90 dias, prorrogável)</strong></p>
-<p>Após a formalização, acompanhamento contínuo para <strong>captação de investimentos, parceiros e projetos de pesquisa aplicada</strong>, com apoio jurídico e estratégico sobre o portfólio B2B.</p>
-<p><strong>O que o Instituto ganha</strong></p>
+<p><strong>O que combinamos</strong></p>
 <ul>
-<li>Elegibilidade para incentivos fiscais de PD&amp;I (Lei do Bem) e metas ESG de grandes empresas.</li>
-<li>Portfólio de projetos de pesquisa prontos para a captação.</li>
-<li>Governança e contabilidade preparadas para auditorias de inovação.</li>
-<li>Métodos e métricas de impacto que dão credibilidade frente a corporações e conselhos.</li>
+<li><strong>Reuniões semanais de acompanhamento</strong> às terças-feiras, das 9h30 às 10h30.</li>
+<li><strong>Pasta compartilhada no Google Drive</strong> para reunir os documentos do projeto — centralizando o acesso via e-mails institucionais.</li>
 </ul>
-<p><strong>Como será a parceria</strong></p>
-<p>A equipe do Instituto trabalhará em conjunto com a consultoria, com comunicação periódica de progresso e apoio na localização e envio dos documentos e informações necessários ao longo das etapas.</p>
-<p><strong>Checklist de documentos a fornecer</strong></p>
-<p>Lista de documentos e informações a serem solicitados ao Instituto Levvo para apoiar a Fase 01 do projeto de transformação em ICT. Organizada por etapa; usar como pauta de comunicação.</p>
-<h2>Etapa 1 — Diagnóstico</h2>
-<ul>
-<li class="check"><span class="box"></span>Estatuto social vigente e registro em cartório</li>
-<li class="check"><span class="box"></span>Descrição oficial dos programas (Oficina de Costura Mais Renda e Jeans do Bem)</li>
-<li class="check"><span class="box"></span>Fluxograma do processo produtivo do Jeans do Bem</li>
-<li class="check"><span class="box"></span>Relatórios de produção (volume reaproveitado, peças, insumos — 12 meses)</li>
-<li class="check"><span class="box"></span>Currículo e metodologias de ensino</li>
-<li class="check"><span class="box"></span>Relatos de barreiras técnicas (desfibramento, reprodutibilidade, acabamento)</li>
-<li class="check"><span class="box"></span>Contratos/parcerias existentes</li>
-<li class="check"><span class="box"></span>Organograma e listagem da equipe (cargos, formação, regime)</li>
-<li class="check"><span class="box"></span>Descrição de funções e responsabilidades</li>
-<li class="check"><span class="box"></span>Processos atuais de coleta de dados (planilhas, formulários, sistemas)</li>
-<li class="check"><span class="box"></span>Registros de presença, certificação e acompanhamento das alunas</li>
-<li class="check"><span class="box"></span>Política de arquivamento (fotos, documentos, testes)</li>
-<li class="check"><span class="box"></span>Ferramentas de TI disponíveis (computadores, softwares, internet)</li>
-<li class="check"><span class="box"></span>Atas de conselho/diretoria</li>
-<li class="check"><span class="box"></span>Documentos de posse/uso do imóvel (escritura, comodato, licença)</li>
-<li class="check"><span class="box"></span>Planta da sede (metragem, layout, salas/oficinas)</li>
-<li class="check"><span class="box"></span>Levantamento de máquinas e equipamentos (costura, corte, bancadas)</li>
-<li class="check"><span class="box"></span>Infraestrutura de utilidades (energia, água, internet, acessibilidade)</li>
-<li class="check"><span class="box"></span>Alvarás/licenças (funcionamento, sanitário, ambiental, segurança)</li>
-<li class="check"><span class="box"></span>Capacidade instalada de aulas/oficinas (turmas, turnos)</li>
-</ul>
-<h2>Etapa 2 — Estruturação</h2>
-<ul>
-<li class="check"><span class="box"></span>Estatuto social vigente (texto completo)</li>
-<li class="check"><span class="box"></span>Registro em cartório, ata de constituição e alterações</li>
-<li class="check"><span class="box"></span>CNPJ e situação cadastral</li>
-<li class="check"><span class="box"></span>Balancete/demonstrações contábeis recentes (balanço, DRE)</li>
-<li class="check"><span class="box"></span>Plano de contas atual e estrutura de custos</li>
-<li class="check"><span class="box"></span>Relação de receitas e fontes atuais (doações, convênios, editais)</li>
-<li class="check"><span class="box"></span>Contabilidade responsável e políticas de registro</li>
-<li class="check"><span class="box"></span>Registro de ativos (máquinas, veículos, imóvel) e depreciações</li>
-<li class="check"><span class="box"></span>Regras de governança atuais (atas, diretoria, instâncias)</li>
-<li class="check"><span class="box"></span>Acordos/regras de propriedade intelectual em convênios ou editais</li>
-<li class="check"><span class="box"></span>Descrição dos projetos/programas (método, escopo, resultados)</li>
-<li class="check"><span class="box"></span>Dados de custo e viabilidade por projeto (insumos, mão de obra, tempo)</li>
-<li class="check"><span class="box"></span>Manuais/protocolos de metodologia (Jeans do Bem, Oficina)</li>
-<li class="check"><span class="box"></span>Benchmarking de oferta (o que já foi vendido ou ofertado)</li>
-<li class="check"><span class="box"></span>Contratos/parcerias existentes ou potenciais</li>
-<li class="check"><span class="box"></span>Indicadores sociais hoje medidos (outputs/outcomes)</li>
-<li class="check"><span class="box"></span>Dados históricos de impacto (renda, empregabilidade, resíduo)</li>
-<li class="check"><span class="box"></span>Base de alunas/egressas (contato, trajetória)</li>
-<li class="check"><span class="box"></span>Metas e objetivos institucionais declarados (missão, visão)</li>
-</ul>
-<h2>Etapa 3 — Preparação para Mercado</h2>
-<ul>
-<li class="check"><span class="box"></span>Portfólio consolidado de projetos por linha de pesquisa</li>
-<li class="check"><span class="box"></span>Referências de marca (logo, identidade visual, nome)</li>
-<li class="check"><span class="box"></span>Números de impacto atuais (mulheres, volume, renda)</li>
-<li class="check"><span class="box"></span>Histórias/cases de sucesso (depoimentos, fotos autorizadas)</li>
-<li class="check"><span class="box"></span>Certificações/vínculos institucionais (CEBAS, conselhos, redes)</li>
-<li class="check"><span class="box"></span>Área de atuação e público-alvo dos projetos</li>
-<li class="check"><span class="box"></span>Cadastros vigentes em mecanismos de incentivo (FUMCAD, Fundo do Idoso, editais)</li>
-<li class="check"><span class="box"></span>Documentos de qualificação para leis de incentivo</li>
-<li class="check"><span class="box"></span>Projetos elegíveis por mecanismo (escopo, público, orçamento)</li>
-<li class="check"><span class="box"></span>Histórico de captação (fontes acessadas, valores)</li>
-<li class="check"><span class="box"></span>Parcerias com empresas/contrapartida</li>
-<li class="check"><span class="box"></span>Indicadores de saída e resultado (outputs/outcomes)</li>
-<li class="check"><span class="box"></span>Séries históricas de dados de impacto</li>
-<li class="check"><span class="box"></span>Relatórios/indicadores atuais de prestação de contas</li>
-<li class="check"><span class="box"></span>Canais de comunicação utilizados (site, redes, imprensa)</li>
-<li class="check"><span class="box"></span>Padrão visual/modelos de relatório existentes</li>
-<li class="check"><span class="box"></span>Informações sobre o setor têxtil (região, porte, regime tributário)</li>
-</ul>
+<p><strong>Próximo passo — acesse a pasta do projeto</strong></p>
+<p>Para começar, criamos uma pasta compartilhada no Google Drive. É nela que vamos reunir a documentação do Instituto e compartilhar os materiais da consultoria.</p>
+<div class="cta">
+  <p>Clique no botão abaixo para acessar a pasta do projeto.</p>
+  <a class="btn" href="https://drive.google.com/drive/folders/1CFNMfRBTiTaXVUNffBZzEHJcDASEBbWr?usp=share_link" target="_blank" rel="noopener">Acessar a pasta do projeto</a>
+  <span class="url">https://drive.google.com/drive/folders/1CFNMfRBTiTaXVUNffBZzEHJcDASEBbWr?usp=share_link</span>
 </div>
-<div class="footer">Instituto Levvo — Transformação para Instituição Científica, Tecnológica e de Inovação (ICT) · Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</div>
+<p><strong>Materiais que o Instituto vai enviar</strong></p>
+<p>Para apoiar o diagnóstico, solicita-se que o time envie, pela pasta compartilhada, os itens a seguir. Marque cada documento conforme for enviado.</p>
+<div class="checklist">
+<label class="item"><input type="checkbox"><span>Fluxograma do processo produtivo do Jeans do Bem</span></label>
+<label class="item"><input type="checkbox"><span>Metodologia de ensino do curso de costura (metodologia SENAI)</span></label>
+<label class="item"><input type="checkbox"><span>Conteúdo dos três pilares de treinamento do Instituto</span></label>
+<label class="item"><input type="checkbox"><span>Planta do terreno digitalizada (imóvel concedido pelo GDF)</span></label>
+<label class="item"><input type="checkbox"><span>Lista de máquinas e equipamentos utilizados no laboratório</span></label>
+<label class="item"><input type="checkbox"><span>Relatórios de produção das atividades de reaproveitamento</span></label>
+<label class="item"><input type="checkbox"><span>Cópias dos contratos e parcerias existentes (instituições e empresas)</span></label>
+<label class="item"><input type="checkbox"><span>Lista dos membros da equipe e suas funções no Instituto</span></label>
+<label class="item"><input type="checkbox"><span>Estatuto social e documentos correlatos</span></label>
+</div>
+<p><strong>O que vem pela frente</strong></p>
+<p>Com os materiais recebidos, damos continuidade ao diagnóstico e às próximas etapas da transformação. Teremos encontros semanais para acompanhar o andamento e manter o time alinhado em cada passo.</p>
+</div>
+<div class="footer">Instituto Levvo — Consultoria de Transição para Instituição Científica, Tecnológica e de Inovação (ICT) · Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</div>
 </body></html>
