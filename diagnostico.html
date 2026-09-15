@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Levvo · Diagnóstico de Admissibilidade de PD&I</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--brand:#0e7490;--brand-dk:#0c4a6e;--ink:#1f2937;--muted:#64748b;--line:#e2e8f0;--panel:#f2f6f9;--accent:#c2410c;--bg:#f8fafc;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px;}
+nav{background:var(--brand-dk);padding:0 24px;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(15,23,42,.15);}
+nav .inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+nav a{color:#fff;text-decoration:none;font-size:13.5px;font-weight:600;padding:14px 14px;opacity:.9;transition:opacity .15s;}
+nav a:hover{opacity:1;}
+nav a.active{opacity:1;border-bottom:3px solid #fff;}
+nav .brand{margin-right:auto;font-weight:700;font-size:14px;opacity:1;padding-right:8px;}
+nav .brand small{display:block;font-weight:400;font-size:10.5px;opacity:.75;}
+@media(max-width:640px){nav a{padding:12px 8px;font-size:12.5px}}
+header.top{background:linear-gradient(135deg,#0c4a6e,#0e7490);color:#fff;padding:40px 24px 42px;}
+header.top .inner{max-width:900px;margin:0 auto;}
+header.top .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.85;margin-bottom:12px;}
+header.top h1{font-size:30px;line-height:1.25;font-weight:700;max-width:760px;}
+header.top .sub{margin-top:14px;font-size:15px;opacity:.92;max-width:640px;}
+header.top .meta{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.28);font-size:12.5px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 22px;}
+header.top .meta span{display:inline-flex;align-items:center;}
+header.top .meta .tag{font-weight:600;color:#fff;}
+.doc{max-width:900px;margin:-24px auto 60px;background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(15,23,42,.10);padding:40px 44px;position:relative;}
+p{margin:10px 0;color:#334155;}
+strong{color:var(--brand-dk);}
+ul,ol{margin:12px 0 12px 24px;}
+li{margin:6px 0;color:#334155;}
+ul li::marker{color:var(--brand);}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13.5px;}
+th{background:var(--brand);color:#fff;text-align:left;padding:11px 12px;font-size:12.5px;letter-spacing:.02em;}
+td{border:1px solid #dbe2ea;padding:10px 12px;vertical-align:top;}
+td:first-child{font-weight:600;color:var(--brand-dk);}
+tr:nth-child(even) td{background:#f8fafc;}
+hr{border:none;border-top:1px solid var(--line);margin:30px 0;}
+.footer{max-width:900px;margin:-34px auto 50px;text-align:center;font-size:13px;color:var(--muted);padding:0 24px;}
+/* cards de resumo */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0 28px;}
+@media(max-width:640px){.cards{grid-template-columns:repeat(2,1fr);}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+.card .label{font-size:12.5px;color:var(--muted);}
+.card .val{font-size:28px;font-weight:700;margin:4px 0 2px;}
+.card .note{font-size:11.5px;color:var(--muted);}
+/* badges */
+.badge{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;}
+.badge-green{background:#d1fae5;color:#065f46;}
+.badge-yellow{background:#fef3c7;color:#92400e;}
+.badge-red{background:#fee2e2;color:#991b1b;}
+.badge-blue{background:#dbeafe;color:#1e40af;}
+/* charts */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 28px;}
+@media(max-width:640px){.charts{grid-template-columns:1fr;}}
+.chart-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;}
+.chart-box h4{font-size:13.5px;font-weight:700;margin-bottom:10px;}
+/* labs */
+.lab{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0;}
+.lab h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+.lab p{font-size:13.5px;}
+.lab-a{border-left:4px solid #0e7490;}
+.lab-b{border-left:4px solid #f59e0b;}
+.lab-c{border-left:4px solid #10b981;}
+.lab-d{border-left:4px solid #8b5cf6;}
+.lab .tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.lab .tag-a{color:#0e7490;}
+.lab .tag-b{color:#f59e0b;}
+.lab .tag-c{color:#10b981;}
+.lab .tag-d{color:#8b5cf6;}
+.chain{text-align:center;padding:20px 0;font-size:14px;font-weight:700;color:var(--brand-dk);letter-spacing:.04em;}
+.chain span{display:inline-block;padding:4px 14px;border-radius:20px;margin:0 4px;}
+.chain .ca{background:#dbeafe;}
+.chain .cb{background:#fef3c7;}
+.chain .cc{background:#d1fae5;}
+.chain .cd{background:#ede9fe;}
+/* senai */
+.qblock{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:10px 0;}
+.qblock h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+.qblock ul{margin:0 0 0 18px;}
+.qblock li{font-size:13.5px;color:#475569;}
+/* divergences */
+.div{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin:8px 0;}
+.div strong{color:#991b1b;}
+</style></head><body>
+<nav>
+  <div class="inner">
+    <a class="brand" href="index.html">Levvo<small>Consultoria ICT</small></a>
+    <a href="index.html">Apresentação</a>
+    <a href="projeto.html">Sobre o projeto</a>
+    <a href="encontros/index.html">Encontros</a>
+    <a href="documentos.html">Documentos a fornecer</a>
+    <a class="active" href="diagnostico.html">Diagnóstico</a>
+  </div>
+</nav>
+<header class="top">
+  <div class="inner">
+    <div class="kicker">Instituto Levvo · Consultoria de Transformação</div>
+    <h1>Diagnóstico de Admissibilidade de PD&I</h1>
+    <div class="sub">Relatório do Entregável 1 — FASE 01 · Rascunho v0.1</div>
+    <div class="meta">
+      <span>Data de atualização: 15/09/2026</span>
+      <span class="tag">Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </div>
+</header>
+<div class="doc">
+
+<h1>Diagnóstico de Admissibilidade de PD&I</h1>
+<p><strong>Instituto Levvo</strong> · Transição para Instituição Científica, Tecnológica e de Inovação (ICT) · FASE 01 — Entregável 1</p>
+<p><strong>Status: RASCUNHO — em evolução.</strong> Versão inicial consolidando a análise dos documentos recebidos.</p>
+<hr />
+
+<!-- Cards -->
+<div class="cards">
+  <div class="card"><div class="label">Itens analisados</div><div class="val">21</div><div class="note">matriz de coleta</div></div>
+  <div class="card"><div class="label">Prontos</div><div class="val" style="color:#065f46">5</div><div class="note">base sólida</div></div>
+  <div class="card"><div class="label">Parciais</div><div class="val" style="color:#92400e">7</div><div class="note">precisam complemento</div></div>
+  <div class="card"><div class="label">Pendentes</div><div class="val" style="color:#991b1b">9</div><div class="note">gaps a fechar</div></div>
+</div>
+
+<!-- Gráficos -->
+<div class="charts">
+  <div class="chart-box">
+    <h4>Status dos itens analisados</h4>
+    <div style="height:220px"><canvas id="chartStatus"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <h4>Status por seção</h4>
+    <div style="height:220px"><canvas id="chartSecoes"></canvas></div>
+  </div>
+</div>
+
+<!-- §1 Objeto e metodologia -->
+<h2>1. Objeto e metodologia</h2>
+<p>Este relatório apresenta o diagnóstico de <strong>admissibilidade</strong> do Instituto Levvo para atuar como <strong>Instituição Científica, Tecnológica e de Inovação (ICT)</strong>, nos termos da Lei nº 10.973/2004, e para estruturar projetos de <strong>Pesquisa, Desenvolvimento e Inovação (PD&I)</strong> elegíveis a incentivos (Lei do Bem — Lei 11.196/2005).</p>
+<p><strong>Metodologia.</strong> Análise documental de 14 conjuntos de documentos do Instituto, cruzados com uma matriz de coleta e com o levantamento de mercado/incentivos.</p>
+<p><strong>Escopo (dias 1–15):</strong> conhecer e segregar a operação entre rotina e inovação, identificar as incertezas tecnológicas que justificam projetos de pesquisa, e avaliar capacidade técnica, de dados e de infraestrutura.</p>
+<hr />
+
+<!-- §2 Admissibilidade jurídico -->
+<h2>2. Admissibilidade jurídico-institucional</h2>
+<table>
+<thead><tr><th>Item</th><th>Situação</th><th>Comentário</th></tr></thead>
+<tbody>
+<tr><td>Objeto social compatível com ICT</td><td><span class="badge badge-green">Pronto</span></td><td>Arts. 10, 51–53 (Lei 10.973/2004)</td></tr>
+<tr><td>Governança para inovação (Comitês, NIT)</td><td><span class="badge badge-blue">Previsto</span></td><td>Arts. 27, 63–66 — a implantar</td></tr>
+<tr><td>Receitas diversificadas</td><td><span class="badge badge-blue">Previsto</span></td><td>Art. 80 do Estatuto</td></tr>
+<tr><td>Registro em cartório do novo Estatuto</td><td><span class="badge badge-red">Pendente</span></td><td>Bloqueia formalização da ICT</td></tr>
+<tr><td>Estatuto/ata constitutiva + CNPJ vigente</td><td><span class="badge badge-red">Pendente</span></td><td>A confirmar</td></tr>
+<tr><td>Consistência formal do Estatuto</td><td><span class="badge badge-yellow">Ajustar</span></td><td>Conselho Admin. × Deliberativo; arts. duplicados</td></tr>
+</tbody>
+</table>
+<p><strong>Leitura:</strong> o texto estatutário já contempla os requisitos de ICT; o bloqueio é formal (registro/CNPJ e consistência interna do documento).</p>
+<hr />
+
+<!-- §3 Portfólio -->
+<h2>3. Portfólio — segregação rotina × inovação</h2>
+<table>
+<thead><tr><th>Item</th><th>Situação</th><th>Comentário</th></tr></thead>
+<tbody>
+<tr><td>Oficina de Costura Mais Renda</td><td><span class="badge badge-green">Pronto</span></td><td>Currículo SENAI 200h + relatórios</td></tr>
+<tr><td>Jeans do Bem</td><td><span class="badge badge-yellow">Atenção</span></td><td>Empresa separada (CNPJ próprio); 30% ao instituto</td></tr>
+<tr><td>Fluxograma do processo produtivo</td><td><span class="badge badge-red">Pendente</span></td><td>Apenas descrição narrativa</td></tr>
+<tr><td>Barreiras técnicas</td><td><span class="badge badge-red">Pendente</span></td><td>Gap central para PD&I</td></tr>
+<tr><td>Relatórios de produção (12 meses)</td><td><span class="badge badge-yellow">Parcial</span></td><td>Só 2026; titulação instituto×empresa</td></tr>
+<tr><td>Metodologia de ensino</td><td><span class="badge badge-green">Pronto</span></td><td>Plano SENAI 200h + capacitações</td></tr>
+</tbody>
+</table>
+<p><strong>Leitura:</strong> a capacidade formativa e produtiva está comprovada. Dois pontos centrais: (i) ainda não foi isolada a inovação (sem barreiras técnicas/fluxograma não há projeto de PD&I); (ii) é preciso segregar claramente o que é do Instituto (coleta, triagem, upcycling formativo) do que é da empresa (produção).</p>
+<hr />
+
+<!-- §4 Maturidade interna -->
+<h2>4. Maturidade interna e dados</h2>
+<table>
+<thead><tr><th>Item</th><th>Situação</th><th>Comentário</th></tr></thead>
+<tbody>
+<tr><td>Funções e responsabilidades</td><td><span class="badge badge-green">Pronto</span></td><td>Estatuto + Regimento</td></tr>
+<tr><td>Estrutura de RH</td><td><span class="badge badge-yellow">Parcial</span></td><td>Cargo/vínculo sem nomes/formação</td></tr>
+<tr><td>Nomes, formação e organograma</td><td><span class="badge badge-red">Pendente</span></td><td>A fornecer</td></tr>
+<tr><td>Coleta de dados e indicadores</td><td><span class="badge badge-yellow">Parcial</span></td><td>Formulários sem acompanhamento longitudinal</td></tr>
+<tr><td>Registros de presença/certificação</td><td><span class="badge badge-yellow">Parcial</span></td><td>Menção sem amostras</td></tr>
+<tr><td>Ferramentas de TI / atas de governança</td><td><span class="badge badge-red">Pendente</span></td><td>A fornecer</td></tr>
+</tbody>
+</table>
+<hr />
+
+<!-- §5 Infraestrutura -->
+<h2>5. Infraestrutura — sede como laboratório vivo</h2>
+<table>
+<thead><tr><th>Item</th><th>Situação</th><th>Comentário</th></tr></thead>
+<tbody>
+<tr><td>Posse/uso do imóvel</td><td><span class="badge badge-yellow">Parcial</span></td><td>Sede Samambaia "em finalização"</td></tr>
+<tr><td>Planta/metragem/layout</td><td><span class="badge badge-red">Pendente</span></td><td>Descrição parcial (salas)</td></tr>
+<tr><td>Maquinário/equipamentos</td><td><span class="badge badge-yellow">Parcial</span></td><td>Inventário do plano de curso, não da produção</td></tr>
+<tr><td>Utilidades e alvarás</td><td><span class="badge badge-red">Pendente</span></td><td>Licença declarada; documentos a fornecer</td></tr>
+<tr><td>Capacidade instalada</td><td><span class="badge badge-yellow">Parcial</span></td><td>60/ano declarado; divergência com 15 vagas</td></tr>
+</tbody>
+</table>
+<hr />
+
+<!-- §6 Incentivos -->
+<h2>6. Modelo de incentivos e captação</h2>
+<table>
+<thead><tr><th>Canal</th><th>Tipo</th><th>Conexão com o Instituto</th></tr></thead>
+<tbody>
+<tr><td>Lei do Bem (11.196/2005)</td><td>Incentivo fiscal</td><td>Empresa Lucro Real deduz PD&I contratado com ICT</td></tr>
+<tr><td>Lei de Inovação (10.973/2004)</td><td>Marco jurídico</td><td>Parceria, transferência de tecnologia e bolsas</td></tr>
+<tr><td>Lei de Incentivo à Reciclagem (14.260/2021)</td><td>Incentivo fiscal</td><td>Até 1% IRPJ/CSLL em logística reversa — encaixe direto</td></tr>
+<tr><td>Indústria da Moda DF (ABDI+SENAI)</td><td>Programa</td><td>Instituto social parceiro + equipamentos</td></tr>
+<tr><td>Reinventa.BR (ABDI)</td><td>Programa</td><td>Prepara empresas para cooperar com ICTs</td></tr>
+<tr><td>Coopera+ (ABDI)</td><td>Programa</td><td>Economia circular + cooperativismo</td></tr>
+<tr><td>MROSC/SEDES-DF · FAP-DF · EMBRAPII/FINEP</td><td>Fomento</td><td>Termos de Fomento; editais; P&D aplicada</td></tr>
+</tbody>
+</table>
+<hr />
+
+<!-- §7 Divergências -->
+<h2>7. Divergências a confirmar</h2>
+<div class="div"><strong>1.</strong> Carga horária: plano SENAI = 200h × Sindiveste = 340h</div>
+<div class="div"><strong>2.</strong> Escala de alunos: 15 vagas (plano) × 20 (relatório) × 30/turma (atividades)</div>
+<div class="div"><strong>3.</strong> Governança: Conselho Administração × Deliberativo; artigos duplicados</div>
+<div class="div"><strong>4.</strong> Endereços: Águas Claras × Samambaia × Taguatinga Shopping</div>
+<div class="div"><strong>5.</strong> Titulação: relatórios "Levvo Instituto" × manufatura na empresa Jeans do Bem</div>
+<hr />
+
+<!-- §8 Veredito -->
+<h2>8. Veredito e leitura estratégica</h2>
+<p><strong>O que já está pronto:</strong> base estatutária de ICT, desenho curricular (200h de upcycling), equipe multidisciplinar e rede de parceiros (SENAI-DF, Sindiveste, Levvo Energia), e frentes de P&D com interface com a indústria.</p>
+<p><strong>O que precisa de ajuste:</strong></p>
+<ul>
+<li>Formalizar registro/CNPJ e a consistência do Estatuto.</li>
+<li>Isolar a inovação: produzir o fluxograma de coleta e os relatos de barreiras técnicas.</li>
+<li>Segregar instituto × empresa: garantir que o PD&I elegível esteja no Instituto (coleta, triagem, upcycling formativo), não na empresa.</li>
+<li>Elevar a evidência interna: nomes/formação, organograma, atas, TI, arquivamento e acompanhamento longitudinal das egressas.</li>
+<li>Validar fisicamente a sede de Samambaia (posse, planta, licenças, utilidades).</li>
+</ul>
+<p><strong>Veredito:</strong> o Instituto é admissível como ICT, com ressalvas. A qualificação é viável, condicionada ao fechamento dos itens formais e à formalização das evidências e da inovação.</p>
+<hr />
+
+<!-- §9 Laboratórios -->
+<h2>9. Proposta de Laboratórios</h2>
+<p>A transição se sustenta em <strong>4 laboratórios de pesquisa</strong> que transformam atividade assistencial em portfólio B2B elegível a incentivos fiscais. Ordem: <strong>A + C primeiro</strong> (geram PD&I elegível com infra leve), <strong>depois B + D</strong> (validação e mensuração).</p>
+
+<div class="lab lab-a">
+  <span class="tag tag-a">Primeiro</span>
+  <h4>Lab A — Tratamento Mecânico e Caracterização</h4>
+  <p>Pesquisa aplicada na recuperação mecânica da fibra de jeans pós-consumo e na caracterização do material, em escala piloto. Gera o risco tecnológico e as evidências para a Lei do Bem. Eixos: desfibramento/triagem + caracterização (UHML, SFC, SEM).</p>
+</div>
+<div class="lab lab-c">
+  <span class="tag tag-c">Primeiro</span>
+  <h4>Lab C — P&D de Metodologias de Formação</h4>
+  <p>Validação do método pedagógico como tecnologia social certificável. Eixos: desenho do método + inclusão produtiva/empregabilidade + replicabilidade em outros territórios.</p>
+</div>
+<div class="lab lab-b">
+  <span class="tag tag-b">Depois</span>
+  <h4>Lab B — Prototipagem / Living Lab</h4>
+  <p>Oficina-piloto e fabricação digital de co-criação com a comunidade, em Samambaia. Eixos: protótipos de produto + fabricação digital + co-criação com usuário.</p>
+</div>
+<div class="lab lab-d">
+  <span class="tag tag-d">Depois</span>
+  <h4>Lab D — Mensuração de Impacto e Dados</h4>
+  <p>Coleta, análise e auditoria de dados de impacto (outputs × outcomes). Eixos: Teoria da Mudança + coleta/qualidade de dados + análise de efeito (Impact Lab).</p>
+</div>
+
+<div class="chain">
+  <span class="ca">Lab A</span> →
+  <span class="cb">Lab B</span> →
+  <span class="cc">Lab C</span> →
+  <span class="cd">Lab D</span>
+  <p style="font-size:12px;font-weight:400;color:#64748b;margin-top:8px;">Fibra recuperada → Protótipo validado → Método certificado → Impacto mensurado</p>
+</div>
+<hr />
+
+<!-- §10 Dúvidas SENAI -->
+<h2>10. Dúvidas para a visita ao SENAI/DF (15/09/2026)</h2>
+
+<div class="qblock">
+  <h4>10.1 Acordo de cooperação (965/2020)</h4>
+  <ul>
+    <li>Qual o status atual do acordo? Há previsão de renovação?</li>
+    <li>O escopo ampliável para Labs A/C?</li>
+    <li>Permite projetos de PD&I (não apenas formação)?</li>
+  </ul>
+</div>
+<div class="qblock">
+  <h4>10.2 Carga horária e certificação</h4>
+  <ul>
+    <li>Carga horária vigente: 200h ou 340h?</li>
+    <li>Validade do certificado (CBO 7630-10)?</li>
+    <li>Ampliação para módulos de PD&I?</li>
+  </ul>
+</div>
+<div class="qblock">
+  <h4>10.3 Indústria da Moda DF (ABDI+SENAI)</h4>
+  <ul>
+    <li>SENAI-DF participando do projeto (R$3,95mi)?</li>
+    <li>Levvo como instituto social parceiro?</li>
+    <li>Consultoria técnica de inovação produtiva (40h)?</li>
+    <li>Quais equipamentos seriam disponibilizados?</li>
+  </ul>
+</div>
+<div class="qblock">
+  <h4>10.4 Laboratórios e PD&I</h4>
+  <ul>
+    <li>SENAI Têxtil (SC) / Biossintéticos (RJ) como parceiros Lab A?</li>
+    <li>Editais SENAI para inovação em reciclagem têxtil?</li>
+    <li>Experiência SENAI em rastreabilidade/logística reversa (Lab D)?</li>
+  </ul>
+</div>
+<div class="qblock">
+  <h4>10.5 Estratégia de captação B2B</h4>
+  <ul>
+    <li>SENAI como parceiro de referência para varejo (Renner, C&A, Riachuelo)?</li>
+    <li>Conexão com Reinventa.BR / Coopera+?</li>
+    <li>Dados do mercado de reciclagem têxtil para o Entregável 3?</li>
+  </ul>
+</div>
+
+<p style="margin-top:24px;font-size:12.5px;color:#94a3b8;"><em>Limitações da análise:</em> baseada em documentos fornecidos (majoritariamente 2026), produção recente (não 12 meses) e dados históricos do incentivo (2011–2017); parte dos números depende de validação humana.</p>
+
+</div>
+<div class="footer">Instituto Levvo — Transformação para Instituição Científica, Tecnológica e de Inovação (ICT) · Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</div>
+
+<script>
+var brand='#0e7490',dk='#0c4a6e',verde='#065f46',amber='#92400e',vermelho='#991b1b',azul='#1e40af';
+new Chart(document.getElementById('chartStatus'),{type:'doughnut',data:{labels:['Pronto','Parcial','Pendente','Previsto'],datasets:[{data:[5,7,7,2],backgroundColor:[verde,amber,vermelho,azul]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}}}});
+new Chart(document.getElementById('chartSecoes'),{type:'bar',data:{labels:['Jurídico','Portfólio','Maturidade','Infraestrutura'],datasets:[{label:'Pronto',data:[1,2,1,0],backgroundColor:verde},{label:'Parcial',data:[0,1,3,3],backgroundColor:amber},{label:'Pendente',data:[2,2,2,2],backgroundColor:vermelho},{label:'Previsto',data:[1,0,0,0],backgroundColor:azul}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1}}},plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}}}});
+</script>
+</body></html>
