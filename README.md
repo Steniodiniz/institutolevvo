@@ -40,6 +40,9 @@ public/
 │   ├── index.html          # Índice de encontros
 │   └── registro-01-2026-09-02.html   # Encontro 01 · Kickoff
 ├── documentos.html         # Checklist de documentos a fornecer
+├── diagnostico.html        # Relatório do Entregável 1 (Diagnóstico de Admissibilidade)
+├── Estatuto Social — Proposta v0.2.pdf   # anexo linkado no diagnostico.html
+├── Regimento Interno — v3.0.pdf           # anexo linkado no diagnostico.html
 └── README.md               # este arquivo
 ```
 
