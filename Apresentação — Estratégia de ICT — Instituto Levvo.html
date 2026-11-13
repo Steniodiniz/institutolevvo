@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estratégia de ICT — Instituto Levvo</title>
+<style>
+  :root {
+    --ink: #1c2b33;
+    --muted: #5b6b73;
+    --line: #e3e8eb;
+    --bg: #eef1f3;
+    --card: #ffffff;
+    --accent: #0e7c7b;
+    --accent-soft: #e6f3f2;
+    --lab-a: #2f6fb2;
+    --lab-b: #8a5cc2;
+    --lab-c: #c26b2f;
+    --lab-d: #2f9e6f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { max-width: 900px; margin: 0 auto; padding: 28px 18px 48px; }
+  .slide {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(28,43,51,0.06);
+    margin: 0 0 22px;
+    padding: 30px 34px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+  }
+  .slide-num {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #b6c2c8;
+    letter-spacing: 0.06em;
+  }
+  .slide h2 {
+    font-size: 23px;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+    padding-right: 40px;
+  }
+  .slide .eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .slide p, .slide li {
+    font-size: 15.5px;
+  }
+  .slide ul, .slide ol { margin: 8px 0 4px; padding-left: 22px; }
+  .slide li { margin: 7px 0; }
+  .slide b { color: var(--ink); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .box {
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 10px 0;
+  }
+  .box h4 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0 0 6px;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+  }
+  .box ul { margin: 0; padding-left: 18px; }
+  .box li { font-size: 14.5px; margin: 4px 0; }
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0; }
+  .flow .step {
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 10px 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12.5px;
+  }
+  .flow .step b { display: block; font-size: 13px; margin-bottom: 3px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 4px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13.5px;
+  }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--accent-soft); color: var(--ink); font-size: 13px; }
+  .priority { white-space: nowrap; font-weight: 700; }
+  .onda1 { color: var(--lab-a); }
+  .onda2 { color: var(--muted); }
+  .slide-foot {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    color: #9aa7ad;
+    margin-top: 18px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #0a5f5e 0%, #0e7c7b 55%, #2f9e6f 100%);
+    color: #fff;
+    border: none;
+  }
+  .cover::before { background: transparent; }
+  .cover .eyebrow { color: rgba(255,255,255,0.8); }
+  .cover h1 { font-size: 36px; line-height: 1.12; margin: 8px 0 14px; letter-spacing: -0.01em; }
+  .cover .sub {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.92);
+    margin: 0 0 22px;
+    max-width: 60ch;
+  }
+  .cover .meta {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    border-top: 1px solid rgba(255,255,255,0.35);
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  @media (max-width: 680px) {
+    .two-col, .flow { grid-template-columns: 1fr; }
+    .slide { padding: 24px 20px 20px; }
+    .cover h1 { font-size: 28px; }
+  }
+  nav.site-nav{background:#0c4a6e;padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(15,23,42,.15);}
+  nav.site-nav .inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+  nav.site-nav a{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#fff;text-decoration:none;font-size:13.5px;font-weight:600;padding:14px 14px;opacity:.9;transition:opacity .15s;}
+  nav.site-nav a:hover{opacity:1;}
+  nav.site-nav a.active{opacity:1;border-bottom:3px solid #fff;}
+  nav.site-nav .brand{margin-right:auto;font-weight:700;font-size:14px;opacity:1;padding-right:8px;}
+  nav.site-nav .brand small{display:block;font-weight:400;font-size:10.5px;opacity:.75;}
+  @media(max-width:640px){nav.site-nav a{padding:12px 8px;font-size:12.5px}}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="inner">
+    <a class="brand" href="index.html">Levvo<small>Consultoria ICT</small></a>
+    <a href="index.html">Apresentação</a>
+    <a href="projeto.html">Sobre o projeto</a>
+    <a href="encontros/index.html">Encontros</a>
+    <a href="documentos.html">Documentos a fornecer</a>
+    <a href="diagnostico.html">Diagnóstico</a>
+    <a class="active" href="apresentacoes.html">Apresentações</a>
+  </div>
+</nav>
+<div class="deck">
+
+  <!-- CAPA -->
+  <section class="slide cover">
+    <p class="eyebrow">Apresentação institucional</p>
+    <h1>Estratégia de ICT<br>Instituto Levvo</h1>
+    <p class="sub">A visão macro da transição para Instituição Científica, Tecnológica e de Inovação (ICT) e o afunilamento conjunto do escopo, dos papéis e do fomento.</p>
+    <div class="meta">
+      <span>Para: SENAI CETIQT · Instituto de Inovação da FIRJAN</span>
+      <span>13 de novembro de 2026</span>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="slide">
+    <span class="slide-num">01</span>
+    <p class="eyebrow">Abertura</p>
+    <h2>Quem é o Instituto Levvo</h2>
+    <p>Organização da sociedade civil voltada a <b>mulheres em vulnerabilidade</b>; projeto principal: <b>Oficina de Costura Mais Renda</b>, em parceria com o SENAI desde 2020.</p>
+    <p>Trabalho com <b>upcycling de resíduos têxteis</b> — transformar descarte em novas peças e destinos. Nova sede em <b>Samambaia (DF)</b>, com inauguração prevista para 21/11/2026.</p>
+    <div class="two-col">
+      <div class="box">
+        <h4>Credenciais já consolidadas</h4>
+        <ul>
+          <li><b>Selo Social</b> — impacto social, ambiental e econômico (ODS/Agenda 2030)</li>
+          <li><b>CMAS/CAS-DF</b> — inscrição no Conselho de Assistência Social do DF</li>
+          <li><b>CNPJ 31.107.495/0001-86</b> — entidade sem fins lucrativos</li>
+          <li><b>Curso SENAI-DF</b> — Upcycling na Moda, 200h, CBO 7630-10</li>
+          <li><b>Acordo de cooperação SENAI</b> — Processo 965/2020</li>
+        </ul>
+      </div>
+      <div class="box" style="border-left-color:#c2a22f;">
+        <h4>Em obtenção</h4>
+        <ul>
+          <li><b>CEBAS</b> — certificação de Assistência Social</li>
+          <li><b>Credenciamento ICT/MCTI</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <span class="slide-num">02</span>
+    <p class="eyebrow">Por que ICT</p>
+    <h2>Vocações que convergem com a agenda do setor</h2>
+    <p>O Instituto Levvo reúne vocações que se encontram com a agenda dos parceiros e da indústria têxtil:</p>
+    <ul>
+      <li><b>Impacto social mensurável</b> — inclusão produtiva e empoderamento econômico de mulheres em vulnerabilidade, na pauta ESG e de desenvolvimento humano das corporações.</li>
+      <li><b>Conhecimento prático como ativo</b> — formação e qualificação profissional que se transformam em método e tecnologia social replicável.</li>
+      <li><b>Economia circular aplicada</b> — upcycling de resíduos têxteis (jeans), na frente de rastreabilidade e circularidade que a cadeia precisa endereçar.</li>
+    </ul>
+    <div class="box">
+      <h4>A proposta</h4>
+      <p style="margin:0;">Transformar essas vocações em uma <b>plataforma de PD&I compartilhada</b>, com o Levvo como <b>elo social/aplicado</b> que conecta indústria têxtil, pesquisa aplicada e inclusão produtiva — e a ICT como a via para escalar esse valor junto com os parceiros.</p>
+    </div>
+    <ul>
+      <li><b>Capacidade de investimento:</b> a elegibilidade a Lei do Bem, EMBRAPII, FINEP e ao credenciamento ICT exige <b>demonstrar capacidade de investimento em P,D&I no Brasil</b> — não basta ser organização social.</li>
+      <li><b>Como essa capacidade orienta a estratégia:</b> a capacidade demonstrada de investir em PD&I no Brasil dimensiona o <b>estudo de viabilidade</b> e orienta a escolha da <b>rota de fomento</b> e do <b>parceiro empresarial</b>.</li>
+      <li><b>Posicionamento:</b> nó de articulação entre indústria têxtil, pesquisa aplicada e inclusão produtiva — mais <b>“D”</b> (desenvolvimento) do que <b>“P”</b> (pesquisa básica); sem virar planta industrial.</li>
+    </ul>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <span class="slide-num">03</span>
+    <p class="eyebrow">Núcleo da proposta</p>
+    <h2>As duas incertezas tecnológicas</h2>
+    <div class="two-col">
+      <div class="box">
+        <h4>1 · Incerteza técnica</h4>
+        <p style="margin:0;">Comportamento do <b>jeans e tecidos pós-consumo na reciclagem mecânica</b>: fibra, blends, elastano, contaminação e reprodutibilidade — o que a fibra recuperada permite ou não.</p>
+      </div>
+      <div class="box">
+        <h4>2 · Incerteza metodológica</h4>
+        <p style="margin:0;"><b>Inclusão produtiva</b> de mulheres em vulnerabilidade, <b>empreendedorismo</b> e <b>microcrédito</b> (referência: Instituto Yunus).</p>
+      </div>
+    </div>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <span class="slide-num">04</span>
+    <p class="eyebrow">Arquitetura de laboratórios</p>
+    <h2>Quatro laboratórios em escala piloto</h2>
+    <div class="flow">
+      <div class="step"><b>Lab A</b>Material recuperado + risco tecnológico</div>
+      <div class="step"><b>Lab B</b>Produto e co-criação</div>
+      <div class="step"><b>Lab C</b>Método e tecnologia social</div>
+      <div class="step"><b>Lab D</b>Impacto e dados</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Lab</th><th>Foco</th><th>Prioridade</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>A — Tratamento Mecânico e Caracterização</b></td>
+          <td>Recuperação mecânica da fibra de jeans e caracterização do material — <b>A1</b> mecânico, <b>A2</b> caracterização/ensaio</td>
+          <td class="priority onda1">1ª onda</td>
+        </tr>
+        <tr>
+          <td><b>B — Prototipagem / Living Lab</b></td>
+          <td>Prova de conceito e viabilidade do produto em co-criação (Samambaia) — B1 oficina-piloto, B2 fabricação digital, B3 co-criação</td>
+          <td class="priority onda2">2ª onda</td>
+        </tr>
+        <tr>
+          <td><b>C — Metodologias de Formação e Inclusão Produtiva</b></td>
+          <td>Validação do método pedagógico como tecnologia social (art. 27-VI da Lei de CT&I) — C1 método, C2 inclusão, C3 tecnologia social</td>
+          <td class="priority onda1">1ª onda</td>
+        </tr>
+        <tr>
+          <td><b>D — Mensuração de Impacto e Dados</b></td>
+          <td>Teoria da Mudança e indicadores de output × outcome — D1 teoria, D2 coleta/qualidade, D3 análise de efeito</td>
+          <td class="priority onda2">2ª onda</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin:10px 0 0;"><b>A + C primeiro</b> porque geram PD&I elegível com infraestrutura leve; <b>B + D</b> dependem dos resultados anteriores. Transversal: <b>NIT + Gestão de PD&I</b>.</p>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <span class="slide-num">05</span>
+    <p class="eyebrow">Complementaridade</p>
+    <h2>Onde CETIQT e FIRJAN entram</h2>
+    <ul>
+      <li><b>SENAI CETIQT:</b> metrologia e ensaios — entra como <b>stage gate</b> de caracterização (não como o projeto inteiro), além do observatório de economia circular, serviços tecnológicos e design.</li>
+      <li><b>FIRJAN (Instituto de Inovação):</b> pesquisa de <b>bancada em TRL 3–4</b> (fibras, biossintéticos).</li>
+      <li><b>Instituto Levvo:</b> elo social/aplicado e articulação — <b>sem disputar o espaço</b> de nenhum dos dois.</li>
+      <li><b>Ganho a destacar:</b> a metrologia do CETIQT resolve o gap do Lab A e libera o Levvo para o essencial — o elo social/aplicado.</li>
+    </ul>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <span class="slide-num">06</span>
+    <p class="eyebrow">Primeiro marco</p>
+    <h2>Estudo de viabilidade técnica e econômica</h2>
+    <p>Perguntas que ele precisa responder antes de qualquer CAPEX:</p>
+    <ul>
+      <li>Que resíduo de jeans existe — composição, elastano, blends, volume?</li>
+      <li>Quais rotas de reciclagem mecânica e requisitos da fibra recuperada?</li>
+      <li>CAPEX × OPEX do processamento.</li>
+      <li>Cenários: uso próprio, venda de fibra, coprocessamento e <b>simbiose industrial</b> (automotivo, construção civil, nonwoven).</li>
+    </ul>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <span class="slide-num">07</span>
+    <p class="eyebrow">Fomento</p>
+    <h2>Rotas de fomento e condicionantes</h2>
+    <ul>
+      <li><b>Lei do Bem</b> → exige empresa em <b>Lucro Real</b>.</li>
+      <li><b>EMBRAPII / FINEP / SENAI Inovação</b> → exigem participante com <b>capital industrial</b>.</li>
+      <li>Portanto: o Levvo precisa de um <b>parceiro empresarial</b> para acessar qualquer rota.</li>
+      <li><b>Vetor regulatório:</b> ESPR/DPP (Europa) e o acordo Mercosul–UE empurram rastreabilidade e circularidade — janela de demanda.</li>
+    </ul>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <span class="slide-num">08</span>
+    <p class="eyebrow">Call to action</p>
+    <h2>O que pedimos</h2>
+    <ol>
+      <li>Definir o <b>escopo do estudo de viabilidade técnica e econômica</b> — quem faz o quê.</li>
+      <li><b>Inteligência competitiva</b> da FIRJAN — benchmarks e barreiras.</li>
+      <li><b>Papéis e governança</b> — incluindo NDA e propriedade intelectual.</li>
+      <li><b>Agenda:</b> reunião técnica em dezembro; encontro presencial possível em 23/11 (Mostra BID, Brasília) e visita à inauguração em 21/11.</li>
+    </ol>
+    <div class="slide-foot">
+      <span>Instituto Levvo — Estratégia de ICT</span>
+      <span>Produzido por Stenio Diniz. Uso exclusivo do Instituto Levvo.</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
